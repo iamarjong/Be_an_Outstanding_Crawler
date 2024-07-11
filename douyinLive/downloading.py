@@ -14,8 +14,11 @@ https://pull-flv-l6.douyincdn.com/third/stream-115272286748803111_ld.flv?k=c0b66
 
 將 "https://"  去掉，第一節 ("pull-flv-l6.douyincdn.com") 取出來，作為 target_host， 剩餘部份作為要讓 socket send 的訊息中， GET 後面的部份。 
 
-由於現今的網站都是 ssl 加密 (OSI 模型的第六層)， 因此傳送的訊息不會以明文的方式，而是要加密，而 https，在初始時會有類似 TCP 的三次交握，會交換一些訊息，包括網站方的CA評證(密碼學的東西，不是紙張)，以及
+由於現今的網站都是 ssl 加密 (OSI 模型的第六層)， 因此傳送的訊息不會以明文的方式，而是要加密，而 https，在初始時會有類似 TCP 的三次交握，會交換一些訊息，包括網站方的CA評證(密碼學的東西，不是紙張)，以及RSA的密鑰等。 這些當然可以自己寫，由其是RSA的部份，但是CA的格式我暫且不熟，直接用套件吧。 
+
+所以下述才會多了 "ssl wrap the socket" 那兩行，並換成用 client 來使用 send 功能(method) 等。 
 ''' 
+
 target_host = "pull-flv-l6.douyincdn.com"
 target_port = 443
 
